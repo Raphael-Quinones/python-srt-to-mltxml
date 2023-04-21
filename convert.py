@@ -28,9 +28,52 @@ def changetext():
     #Save to new file
     tree.write("new.xml")
     
-changetext()
+def addsubtitle():
+    '''
+    1.) Copy and Paste new producer tag to the list of producers
+    2.) Put new entry of the new producer tag
+    
+    '''
+    # Load the XML file
+    tree = ET.parse('test3.xml')
+    root = tree.getroot()
+
+    #Find a producer tag
+    producer0 = root.find(".//producer[@id='producer0']")
+
+    #Add new element
+    new_element = ET.Element('producer')
+    #set new_element the same as the producer tag
+    new_element = producer0
+
+    #find the filter tag in the new element
+    filter = new_element.find('filter')
+    #Find all elements with a certain attribute
+    #Use the filter tag to find the property tag with argument attribute
+    nameproperty = filter.find(".//property[@name='argument']")
+    nameproperty.text = "New Sub"
+
+    #INSERTING
+    #Find target element to insert after
+    #in this case producer2
+    target_element = root.find(".//producer[@id='producer2']")
+    #inserting
+    root.insert(2, new_element)
 
 
+    #ADDING TO PLAYLIST
+    #Find playlist tag with attrib playlist0
+    playlist = root.find(".//playlist[@id='playlist0']")
+    #Create new tag
+    to_playlist = ET.Element('entry')
+    to_playlist.set('producer', 'producer3')
+    #append to playlist
+    playlist.append(to_playlist)
+
+    #Save to new file
+    tree.write("newtest.xml")
+
+addsubtitle()
 '''
 # Add a new element to the tree
 new_element = ET.Element('new_element')
