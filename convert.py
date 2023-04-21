@@ -16,9 +16,15 @@ root = tree.getroot()
 
 # Find a specific element and modify its text
 my_element = root.findall('producer')
-producers = [element.attrib for element in my_element]
-for item in producers:
-    print(item)
+producers = [element for element in my_element]
+filter = producers[1].find('filter')
+print(filter.attrib)
+
+#Find all elements with a certain attribute
+#Use the filter tag to find the property tag with argument attribute
+nameproperty = filter.find(".//property[@name='argument']")
+print(nameproperty.text)
+
 
 '''
 # Add a new element to the tree
