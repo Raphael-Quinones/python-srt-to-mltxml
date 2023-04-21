@@ -10,20 +10,25 @@ Whole Flow
 
 import xml.etree.ElementTree as ET
 
-# Load the XML file
-tree = ET.parse('test3.xml')
-root = tree.getroot()
+def changetext():
+    # Load the XML file
+    tree = ET.parse('test3.xml')
+    root = tree.getroot()
 
-# Find a specific element and modify its text
-my_element = root.findall('producer')
-producers = [element for element in my_element]
-filter = producers[1].find('filter')
-print(filter.attrib)
+    # Find producer0 tags
+    producer0 = root.find(".//producer[@id='producer0']")
 
-#Find all elements with a certain attribute
-#Use the filter tag to find the property tag with argument attribute
-nameproperty = filter.find(".//property[@name='argument']")
-print(nameproperty.text)
+    #find filter tag in producer0
+    filter = producer0.find('filter')
+    #Find all elements with a certain attribute
+    #Use the filter tag to find the property tag with argument attribute
+    nameproperty = filter.find(".//property[@name='argument']")
+    nameproperty.text = "Hello"
+
+    #Save to new file
+    tree.write("new.xml")
+    
+changetext()
 
 
 '''
