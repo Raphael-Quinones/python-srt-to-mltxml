@@ -41,10 +41,15 @@ def addsubtitle():
     #Find a producer tag
     producer0 = root.find(".//producer[@id='producer0']")
 
-    #Add new element
-    new_element = ET.Element('producer')
-    #set new_element the same as the producer tag
-    new_element = producer0
+
+    # Create a new element with the same tag and attributes
+    new_element = ET.Element(producer0.tag, producer0.attrib)
+
+    # Copy over the children (if any)
+    new_element.extend(list(producer0))
+
+    # Change the id of the new element
+    new_element.set('id', 'producer3')
 
     #find the filter tag in the new element
     filter = new_element.find('filter')
@@ -53,7 +58,9 @@ def addsubtitle():
     nameproperty = filter.find(".//property[@name='argument']")
     nameproperty.text = "New Sub"
 
-    #INSERTING
+    
+
+    #INSERTING to playlist
     #Find target element to insert after
     #in this case producer2
     target_element = root.find(".//producer[@id='producer2']")
@@ -67,6 +74,8 @@ def addsubtitle():
     #Create new tag
     to_playlist = ET.Element('entry')
     to_playlist.set('producer', 'producer3')
+    to_playlist.set('in', '00:00:00.000')
+    to_playlist.set('out', '00:00:03.983')
     #append to playlist
     playlist.append(to_playlist)
 
